@@ -1,0 +1,29 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.example.something.better">
+
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.INTERNET" />
+
+
+    <application
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme" >
+    <activity android:name="com.example.something.better.MainActivity">
+        <intent-filter>
+            <action android:name="android.intent.action.MAIN" />
+
+            <category android:name="android.intent.category.LAUNCHER" />
+        </intent-filter>
+    </activity>
+        <activity android:name="com.example.something.better.FeedActivity" />
+        <activity android:name="com.example.something.better.RegisterActivity" />
+        <activity android:name="com.example.something.better.NewSocialActivity" />
+        <activity android:name="com.example.something.better.DetailActivity" />
+        <activity android:name="com.example.something.better.UsersInterestedActivity"></activity>
+
+    </application>
+</manifest>
