@@ -46,20 +46,20 @@ public class DetailActivity extends AppCompatActivity implements View.OnClickLis
 
         //initialize
         context = getApplicationContext();
-        TextView eventName = (TextView) findViewById(R.id.textView7);
-        final ImageView img = (ImageView) findViewById(R.id.imageView2);
-        TextView date = (TextView) findViewById(R.id.textView8);
-        TextView description = (TextView) findViewById(R.id.textView9);
-        TextView email = (TextView) findViewById(R.id.textView10);
+        TextView eventName = findViewById(R.id.textView7);
+        final ImageView img = findViewById(R.id.imageView2);
+        TextView date = findViewById(R.id.textView8);
+        TextView description = findViewById(R.id.textView9);
+        TextView email = findViewById(R.id.textView10);
 
         //Vijay - Initialize the address textview
-        TextView address = (TextView) findViewById(R.id.textAddress);
+        TextView address = findViewById(R.id.textAddress);
         //Vijay - Initialize the address textview
 
         //set onClick listeners
-        Button interested = (Button) findViewById(R.id.button10);
+        Button interested = findViewById(R.id.button10);
         interested.setOnClickListener(this);
-        Button numPeopleGoing = (Button) findViewById(R.id.button9);
+        Button numPeopleGoing = findViewById(R.id.button9);
         numPeopleGoing.setOnClickListener(this);
 
         //Fill out variables with the values from the intent
@@ -112,7 +112,7 @@ public class DetailActivity extends AppCompatActivity implements View.OnClickLis
         });
 
         //Display progress bar as the image loads
-        ProgressBar pb = (ProgressBar) findViewById(R.id.progressBar3);
+        ProgressBar pb = findViewById(R.id.progressBar3);
         pb.setVisibility(ProgressBar.VISIBLE);
 
         //Load the image in the background
@@ -138,7 +138,7 @@ public class DetailActivity extends AppCompatActivity implements View.OnClickLis
             protected void onPostExecute(Bitmap result) {
                 img.setImageBitmap(result);
                 //after loading the image, make the progress bar invisible
-                ProgressBar pb = (ProgressBar) findViewById(R.id.progressBar3);
+                ProgressBar pb = findViewById(R.id.progressBar3);
                 pb.setVisibility(ProgressBar.INVISIBLE);
             }
         }
@@ -207,7 +207,7 @@ public class DetailActivity extends AppCompatActivity implements View.OnClickLis
      */
 
     public void displayNumPeopleButton(int num) {
-        Button numPeopleGoing = (Button) findViewById(R.id.button9);
+        Button numPeopleGoing = findViewById(R.id.button9);
         if (num > 0) {
             numPeopleGoing.setText(num + " People Going");
         }
@@ -220,7 +220,7 @@ public class DetailActivity extends AppCompatActivity implements View.OnClickLis
 
     public void onClick(View view){
         if (view.getId() == R.id.button10) {
-            ProgressBar pb = (ProgressBar) findViewById(R.id.progressBar3);
+            ProgressBar pb = findViewById(R.id.progressBar3);
             pb.setVisibility(ProgressBar.VISIBLE);
             addInterested();
             pb.setVisibility(ProgressBar.INVISIBLE);

@@ -1,6 +1,7 @@
 package com.example.something.better;
 
 import android.app.Activity;
+import android.app.DatePickerDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -14,10 +15,12 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnFailureListener;
@@ -32,13 +35,15 @@ import com.google.firebase.storage.UploadTask;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Calendar;
 
-public class NewSocialActivity extends AppCompatActivity implements View.OnClickListener {
+public class NewSocialActivity extends AppCompatActivity implements View.OnClickListener, DatePickerDialog.OnDateSetListener {
 
     //codes for telling what dialog action was taken
     public static final int GET_FROM_GALLERY = 3;
     public static final int GET_FROM_CAMERA = 4;
     public Uri currentImage = null;
+    Button btnEventDate;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,10 +56,33 @@ public class NewSocialActivity extends AppCompatActivity implements View.OnClick
         Button butt = (Button) findViewById(R.id.button8);
         butt.setOnClickListener(this);
 
+         btnEventDate = (Button) findViewById(R.id.btnEventDate);
+        btnEventDate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+showDatePickerDialog();
+            }
+        });
+
     }
 
 
+    public void showDatePickerDialog() {
 
+        DatePickerDialog datePickerDialog = new DatePickerDialog(
+                this,
+                this,
+                Calendar.getInstance().get(Calendar.YEAR),
+                Calendar.getInstance().get(Calendar.MONTH),
+                Calendar.getInstance().get(Calendar.DAY_OF_MONTH));
+        datePickerDialog.show();
+    }
+
+    @Override
+    public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+        String date  =  month + "/" + dayOfMonth + "/" + year;
+        btnEventDate.setText(date);
+    }
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 
@@ -162,7 +190,7 @@ public class NewSocialActivity extends AppCompatActivity implements View.OnClick
             public void onSuccess(UploadTask.TaskSnapshot x) {
 
                 //Vijay - Pass the address node in the async task. Check the last parameter
-                new DownloadFilesTask().execute(((EditText) findViewById(R.id.editText7)).getText().toString(),((EditText) findViewById(R.id.editText4)).getText().toString(),((EditText) findViewById(R.id.editText3)).getText().toString(),((EditText) findViewById(R.id.editAddress)).getText().toString());
+                new DownloadFilesTask().execute(((EditText) findViewById(R.id.editText7)).getText().toString(),((Button) findViewById(R.id.btnEventDate)).getText().toString(),((EditText) findViewById(R.id.editText3)).getText().toString(),((EditText) findViewById(R.id.editAddress)).getText().toString());
                 //Vijay - Pass the address node in the async task. Check the last parameter
 
             }
@@ -175,12 +203,12 @@ public class NewSocialActivity extends AppCompatActivity implements View.OnClick
      */
     public boolean verifyFields() {
         String x =((EditText) findViewById(R.id.editText7)).getText().toString();
-        String y = ((EditText) findViewById(R.id.editText4)).getText().toString();
+        String y = ((Button) findViewById(R.id.btnEventDate)).getText().toString();
         String z =  ((EditText) findViewById(R.id.editText3)).getText().toString();
 
         //Vijay - Get the address from the edit text
         String address =  ((EditText) findViewById(R.id.editAddress)).getText().toString();
-        if (x != null && y != null && z != null && address!=null&&currentImage != null) {
+        if (x != null && !y.equalsIgnoreCase("Set Event Date") && z != null && address!=null&&currentImage != null) {
             return true;
         }
         //Vijay - Get the address from the edit text
@@ -233,5 +261,6 @@ public class NewSocialActivity extends AppCompatActivity implements View.OnClick
             alertDialog.show();
 
         }
+
     }
 }
