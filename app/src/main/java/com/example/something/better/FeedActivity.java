@@ -81,6 +81,10 @@ public class FeedActivity extends AppCompatActivity implements View.OnClickListe
                     e.numInterested = x.child("interested").getValue(String.class);
                     e.key = x.getKey();
 
+                    //Vijay - Fetch address from firebase and add to the event
+                    e.address=x.child("address").getValue(String.class);
+                    //Vijay - Fetch address from firebase and add to the event
+
                     currEvents.add(e);
                     eventAdapter.notifyDataSetChanged();
                 }

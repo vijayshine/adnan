@@ -52,6 +52,10 @@ public class DetailActivity extends AppCompatActivity implements View.OnClickLis
         TextView description = (TextView) findViewById(R.id.textView9);
         TextView email = (TextView) findViewById(R.id.textView10);
 
+        //Vijay - Initialize the address textview
+        TextView address = (TextView) findViewById(R.id.textAddress);
+        //Vijay - Initialize the address textview
+
         //set onClick listeners
         Button interested = (Button) findViewById(R.id.button10);
         interested.setOnClickListener(this);
@@ -68,7 +72,12 @@ public class DetailActivity extends AppCompatActivity implements View.OnClickLis
         date.setText(dateExtra);
         String descriptionExtra = intent.getStringExtra("description");
         description.setText(descriptionExtra);
-        firebaseKey = intent.getStringExtra("key");
+
+        //Vijay - Set the text on the address textview from the intent
+        address.setText(intent.getStringExtra("address"));
+        //Vijay - Set the text on the address textview from the intent
+
+         firebaseKey = intent.getStringExtra("key");
 
         //retrieve all the people interested and display this number
         DatabaseReference ref = FirebaseDatabase.getInstance().getReference("/events");
@@ -134,7 +143,7 @@ public class DetailActivity extends AppCompatActivity implements View.OnClickLis
             }
         }
         String imageURLExtra = intent.getStringExtra("imageURL");
-        FirebaseStorage.getInstance().getReferenceFromUrl("gs://mdbsocials-56ed5.appspot.com").child(imageURLExtra+ ".png").getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+        FirebaseStorage.getInstance().getReferenceFromUrl("gs://adix-events-2e55b.appspot.com").child(imageURLExtra+ ".png").getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
             @Override
             public void onSuccess(Uri uri) {
                 new DownloadFilesTask().execute(uri.toString()); Log.d("ye", uri.toString());

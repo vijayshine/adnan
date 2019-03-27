@@ -45,8 +45,8 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.CustomViewHo
         }
 
         @Override
-        public void onBindViewHolder(final EventAdapter.CustomViewHolder holder, int position) {
-            Event currentEvent = events.get(events.size() - position - 1);
+        public void onBindViewHolder(final EventAdapter.CustomViewHolder holder, final int position) {
+            final Event currentEvent = events.get(events.size() - position - 1);
 
 
             holder.eventName.setText(currentEvent.eventName);
@@ -57,6 +57,28 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.CustomViewHo
             holder.imageURL = currentEvent.imageURL;
             holder.key = currentEvent.key;
             holder.pplInterested = currentEvent.peopleInterested;
+
+            //Vijay -- Add the cardview click listener
+            holder.cardView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(context, DetailActivity.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    intent.putExtra("email",holder.email.getText().toString());
+                    intent.putExtra("name",holder.eventName.getText().toString());
+                    intent.putExtra("number",holder.numInterested.getText().toString());
+                    intent.putExtra("description", holder.description);
+                    intent.putExtra("date", holder.date);
+                    intent.putExtra("imageURL",holder.imageURL);
+                    intent.putExtra("key",holder.key);
+                    intent.putExtra("peopleInterested",holder.pplInterested);
+
+                    intent.putExtra("address",currentEvent.address);
+
+                    context.startActivity(intent);
+                }
+            });
+            //Vijay -- Add the cardview click listener
 
 
             //Use glide in background
@@ -110,6 +132,7 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.CustomViewHo
             String date;
             String description;
             String imageURL;
+            CardView cardView;
             String key;
             ArrayList<String> pplInterested;
 
@@ -121,25 +144,17 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.CustomViewHo
                 numInterested = (TextView) view.findViewById(R.id.textView14);
                 pic = (ImageView) view.findViewById(R.id.imageView5);
 
-                CardView cardView = (CardView) view.findViewById(R.id.cardView);
-                cardView.setOnClickListener(new View.OnClickListener() {
+                 cardView = (CardView) view.findViewById(R.id.cardView);
+
+
+                 //Vijay - Remove the listener and add it above as per Vijay comment
+              /*  cardView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        Intent intent = new Intent(context, DetailActivity.class);
-                        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                        intent.putExtra("email",email.getText().toString());
-                        intent.putExtra("name",eventName.getText().toString());
-                        intent.putExtra("number",numInterested.getText().toString());
-                        intent.putExtra("description", description);
-                        intent.putExtra("date", date);
-                        intent.putExtra("imageURL",imageURL);
-                        intent.putExtra("key",key);
-                        intent.putExtra("peopleInterested",pplInterested);
 
-                        context.startActivity(intent);
                     }
-                });
-
+                });*/
+                //Vijay - Remove the listener and add it above as per Vijay comment
 
             }
         }

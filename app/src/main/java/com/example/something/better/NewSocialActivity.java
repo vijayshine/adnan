@@ -108,6 +108,8 @@ public class NewSocialActivity extends AppCompatActivity implements View.OnClick
 
         final DatabaseReference ref = FirebaseDatabase.getInstance().getReference();
         final String key = ref.child("events").push().getKey();
+
+        //Vijay - Make sure the storage location is same as below
         StorageReference storageRef = FirebaseStorage.getInstance().getReferenceFromUrl("gs://adix-events-2e55b.appspot.com");
         StorageReference riversRef = storageRef.child(key + ".png");
 
@@ -118,6 +120,10 @@ public class NewSocialActivity extends AppCompatActivity implements View.OnClick
                 String description = strings[0];
                 String date = strings[1];
                 String name = strings[2];
+
+                //Vijay - fetch the address
+                String address = strings[3];
+                //Vijay - fetch the address
                 String email = MainActivity.email;
                 ref.child("events").child(key).child("name").setValue(name);
                 ref.child("events").child(key).child("url").setValue(key);
@@ -125,6 +131,10 @@ public class NewSocialActivity extends AppCompatActivity implements View.OnClick
                 ref.child("events").child(key).child("description").setValue(description);
                 ref.child("events").child(key).child("email").setValue(email);
                 ref.child("events").child(key).child("interested").setValue("1");
+
+                //Vijay - Add the address node in the firebase event
+                ref.child("events").child(key).child("address").setValue(address);
+                //Vijay - Add the address node in the firebase event
                 ArrayList<String> temp = new ArrayList<String>();
                 temp.add(email);
 
@@ -137,6 +147,7 @@ public class NewSocialActivity extends AppCompatActivity implements View.OnClick
             protected void onProgressUpdate(Void... progress) {}
 
             protected void onPostExecute(Bitmap result) {
+                Toast.makeText(getApplicationContext(), "Event Saved!",Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(getApplicationContext(), FeedActivity.class);
                 startActivity(intent);
             }
@@ -149,7 +160,11 @@ public class NewSocialActivity extends AppCompatActivity implements View.OnClick
         }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
             @Override
             public void onSuccess(UploadTask.TaskSnapshot x) {
-                new DownloadFilesTask().execute(((EditText) findViewById(R.id.editText7)).getText().toString(),((EditText) findViewById(R.id.editText4)).getText().toString(),((EditText) findViewById(R.id.editText3)).getText().toString());
+
+                //Vijay - Pass the address node in the async task. Check the last parameter
+                new DownloadFilesTask().execute(((EditText) findViewById(R.id.editText7)).getText().toString(),((EditText) findViewById(R.id.editText4)).getText().toString(),((EditText) findViewById(R.id.editText3)).getText().toString(),((EditText) findViewById(R.id.editAddress)).getText().toString());
+                //Vijay - Pass the address node in the async task. Check the last parameter
+
             }
         });
     }
@@ -162,9 +177,14 @@ public class NewSocialActivity extends AppCompatActivity implements View.OnClick
         String x =((EditText) findViewById(R.id.editText7)).getText().toString();
         String y = ((EditText) findViewById(R.id.editText4)).getText().toString();
         String z =  ((EditText) findViewById(R.id.editText3)).getText().toString();
-        if (x != null && y != null && z != null && currentImage != null) {
+
+        //Vijay - Get the address from the edit text
+        String address =  ((EditText) findViewById(R.id.editAddress)).getText().toString();
+        if (x != null && y != null && z != null && address!=null&&currentImage != null) {
             return true;
         }
+        //Vijay - Get the address from the edit text
+
         return false;
 
     }
@@ -177,7 +197,7 @@ public class NewSocialActivity extends AppCompatActivity implements View.OnClick
             Toast.makeText(getApplicationContext(), "Adding Event",Toast.LENGTH_SHORT).show();
             if (verifyFields()) {
                 sendToServer();
-                Toast.makeText(getApplicationContext(), "Event Saved!",Toast.LENGTH_SHORT).show();
+
             }
             else {
                 Toast.makeText(getApplicationContext(), "Fields Incomplete",Toast.LENGTH_SHORT).show();

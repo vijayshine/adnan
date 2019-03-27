@@ -17,6 +17,10 @@ public class Event {
     String numInterested;
     ArrayList<String> peopleInterested;
 
+    //Vijay - Add the address variable
+    String address;
+    //Vijay - Add the address variable
+
     public Event() {
         peopleInterested = new ArrayList<>();
 
