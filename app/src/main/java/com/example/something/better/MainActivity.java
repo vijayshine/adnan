@@ -11,7 +11,10 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
+import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -33,6 +36,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         Button loginButton = (Button) findViewById(R.id.button2);
         loginButton.setOnClickListener(this);
         Button signUpButton = (Button) findViewById(R.id.button3);
+
         signUpButton.setPaintFlags(signUpButton.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
         signUpButton.setOnClickListener(this);
 
@@ -42,25 +46,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         FirebaseApp.initializeApp(this);
         mAuth = FirebaseAuth.getInstance();
-        mAuthListener = new FirebaseAuth.AuthStateListener() {
-            @Override
-            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
-                FirebaseUser user = firebaseAuth.getCurrentUser();
-                if (user != null) {
-                    // User is signed in
 
-                    Log.d("Login Status", "onAuthStateChanged:signed_in:" + user.getUid());
-                    MainActivity.email = user.getEmail();
-                    Intent intent = new Intent(getApplicationContext(),FeedActivity.class);
-                    startActivity(intent);
-
-                } else {
-                    // User is signed out
-                    Log.d("Login Status", "onAuthStateChanged:signed_out");
-                }
-
-            }
-        };
 
 
     }
@@ -76,21 +62,21 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     public void onStart() {
         super.onStart();
-        mAuth.addAuthStateListener(mAuthListener);
+      //  mAuth.addAuthStateListener(mAuthListener);
     }
     @Override
     public void onStop() {
         super.onStop();
-        if (mAuthListener != null) {
+       /* if (mAuthListener != null) {
             mAuth.removeAuthStateListener(mAuthListener);
-        }
+        }*/
     }
 
     public void onClick(View view) {
         if (view.getId() == R.id.button2) {
             ProgressBar pb = (ProgressBar) findViewById(R.id.progressBar4);
             pb.setVisibility(ProgressBar.VISIBLE);
-            FirebaseUtils.attemptLogin(((EditText) findViewById(R.id.editText)).getText().toString(),((EditText) findViewById(R.id.editText2)).getText().toString(),mAuth,getApplicationContext(),this);//attemptLogin();
+            FirebaseUtils.attemptLogin(((EditText) findViewById(R.id.editText)).getText().toString(),((EditText) findViewById(R.id.editText2)).getText().toString(),mAuth,this,this);//attemptLogin();
             pb.setVisibility(View.INVISIBLE);
         }
         else {

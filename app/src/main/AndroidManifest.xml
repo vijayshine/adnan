@@ -23,6 +23,7 @@
         <activity android:name="com.example.something.better.RegisterActivity" />
         <activity android:name="com.example.something.better.NewSocialActivity" />
         <activity android:name="com.example.something.better.DetailActivity" />
+        <activity android:name="com.example.something.better.VerifyEmailActivity" />
         <activity android:name="com.example.something.better.UsersInterestedActivity"></activity>
 
     </application>
