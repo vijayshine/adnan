@@ -7,9 +7,9 @@
 
     <application
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@drawable/adix"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
+        android:roundIcon="@drawable/adix"
         android:supportsRtl="true"
         android:theme="@style/AppTheme" >
     <activity android:name="com.example.something.better.MainActivity">
@@ -19,11 +19,16 @@
             <category android:name="android.intent.category.LAUNCHER" />
         </intent-filter>
     </activity>
-        <activity android:name="com.example.something.better.FeedActivity" />
+        <activity android:name="com.example.something.better.FeedActivity"
+            android:label="Upcoming AdixEvents List"/>
         <activity android:name="com.example.something.better.RegisterActivity" />
-        <activity android:name="com.example.something.better.NewSocialActivity" />
-        <activity android:name="com.example.something.better.DetailActivity" />
-        <activity android:name="com.example.something.better.VerifyEmailActivity" />
+        <activity android:name="com.example.something.better.NewSocialActivity"
+            android:label="Create AdixEvent">
+
+        </activity>
+        <activity android:name="com.example.something.better.DetailActivity" android:label="AdixEvent Details"/>
+        <activity android:name="com.example.something.better.VerifyEmailActivity"
+            android:label="Verify Email"/>
         <activity android:name="com.example.something.better.UsersInterestedActivity"></activity>
 
     </application>
