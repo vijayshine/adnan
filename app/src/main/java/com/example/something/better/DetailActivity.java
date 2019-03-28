@@ -118,7 +118,7 @@ public class DetailActivity extends AppCompatActivity implements View.OnClickLis
 
         //Load the image in the background
         class DownloadFilesTask extends AsyncTask<String, Void, Bitmap> {
-
+            Bitmap myBitmap;
             protected Bitmap doInBackground(String... strings) {
                     try {
                     URL url = new URL(strings[0]);
@@ -126,10 +126,10 @@ public class DetailActivity extends AppCompatActivity implements View.OnClickLis
                     connection.setDoInput(true);
                     connection.connect();
                     InputStream input = connection.getInputStream();
-                    Bitmap myBitmap = BitmapFactory.decodeStream(input);
+                    myBitmap=null;
+                    myBitmap = BitmapFactory.decodeStream(input);
                     return myBitmap;
-                } catch (IOException e) {
-                    return null;
+                } catch (Exception e) {return null;
                 }
 
             }
@@ -137,17 +137,25 @@ public class DetailActivity extends AppCompatActivity implements View.OnClickLis
             protected void onProgressUpdate(Void... progress) {}
 
             protected void onPostExecute(Bitmap result) {
-                img.setImageBitmap(result);
-                //after loading the image, make the progress bar invisible
-                ProgressBar pb = findViewById(R.id.progressBar3);
-                pb.setVisibility(ProgressBar.INVISIBLE);
+                try {
+                    img.setImageBitmap(result);
+                    //after loading the image, make the progress bar invisible
+                    ProgressBar pb = findViewById(R.id.progressBar3);
+                    pb.setVisibility(ProgressBar.INVISIBLE);
+                }
+                catch (Exception e) {
+
+                }
             }
         }
         String imageURLExtra = intent.getStringExtra("imageURL");
         FirebaseStorage.getInstance().getReferenceFromUrl("gs://adix-events-2e55b.appspot.com").child(imageURLExtra+ ".png").getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
             @Override
             public void onSuccess(Uri uri) {
-                new DownloadFilesTask().execute(uri.toString()); Log.d("ye", uri.toString());
+                try {
+                    new DownloadFilesTask().execute(uri.toString());
+                    Log.d("ye", uri.toString());
+                }catch (Exception e){}
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override
@@ -221,11 +229,13 @@ public class DetailActivity extends AppCompatActivity implements View.OnClickLis
 
     public void onClick(View view){
         if (view.getId() == R.id.button10) {
-            ProgressBar pb = findViewById(R.id.progressBar3);
-            pb.setVisibility(ProgressBar.VISIBLE);
-            addInterested();
-            pb.setVisibility(ProgressBar.INVISIBLE);
-            Toast.makeText(getApplicationContext(), "Marked as Interested", Toast.LENGTH_SHORT).show();
+            try {
+                ProgressBar pb = findViewById(R.id.progressBar3);
+                pb.setVisibility(ProgressBar.VISIBLE);
+                addInterested();
+                pb.setVisibility(ProgressBar.INVISIBLE);
+                Toast.makeText(getApplicationContext(), "Marked as Interested", Toast.LENGTH_SHORT).show();
+            }catch (Exception e){}
         }
         else if (view.getId() == R.id.button9) {
             Intent intent = new Intent(getApplicationContext(), UsersInterestedActivity.class);
