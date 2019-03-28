@@ -25,6 +25,7 @@ import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ServerValue;
@@ -152,7 +153,7 @@ showDatePickerDialog();
                 //Vijay - fetch the address
                 String address = strings[3];
                 //Vijay - fetch the address
-                String email = MainActivity.email;
+                String email = FirebaseAuth.getInstance().getCurrentUser().getEmail();
                 ref.child("events").child(key).child("name").setValue(name);
                 ref.child("events").child(key).child("url").setValue(key);
                 ref.child("events").child(key).child("date").setValue(date);
@@ -178,6 +179,7 @@ showDatePickerDialog();
                 Toast.makeText(getApplicationContext(), "Event Saved!",Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(getApplicationContext(), FeedActivity.class);
                 startActivity(intent);
+                finish();
             }
         }
         riversRef.putFile(currentImage).addOnFailureListener(new OnFailureListener() {

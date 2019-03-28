@@ -81,7 +81,7 @@ public class VerifyEmailActivity extends AppCompatActivity implements View.OnCli
                 // Sign in success, update UI with the signed-in user's information
                 Log.d("TAG", "createUserWithEmail:success");
                 Intent intent = new Intent(this, FeedActivity.class);
-                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(intent);
                 finish();
 
