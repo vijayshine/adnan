@@ -13,6 +13,7 @@ import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
@@ -76,6 +77,8 @@ showDatePickerDialog();
                 Calendar.getInstance().get(Calendar.YEAR),
                 Calendar.getInstance().get(Calendar.MONTH),
                 Calendar.getInstance().get(Calendar.DAY_OF_MONTH));
+
+        datePickerDialog.getDatePicker().setMinDate(System.currentTimeMillis() - 1000);
         datePickerDialog.show();
     }
 
@@ -208,6 +211,8 @@ showDatePickerDialog();
 
         //Vijay - Get the address from the edit text
         String address =  ((EditText) findViewById(R.id.editAddress)).getText().toString();
+
+        Log.d("Current Image",currentImage.toString());
         if (x != null && !y.equalsIgnoreCase("Set Event Date") && z != null && address!=null&&currentImage != null) {
             return true;
         }
@@ -238,19 +243,19 @@ showDatePickerDialog();
 
             AlertDialog alertDialog = new AlertDialog.Builder(NewSocialActivity.this).create();
             alertDialog.setTitle("Set a Photo");
-            alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, "Take a Photo",
+            alertDialog.setButton(AlertDialog.BUTTON_NEGATIVE, "Cancel",
                     new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int which) {
                             //Open Camera
-                            Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                            /*Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
                             if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
                                 startActivityForResult(takePictureIntent, GET_FROM_CAMERA);
-                            }
+                            }*/
 
                             dialog.dismiss();
                         }
                     });
-            alertDialog.setButton(AlertDialog.BUTTON_NEGATIVE, "Upload from Gallery",
+            alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, "Upload from Gallery",
                     new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int which) {
                             //launch gallery
