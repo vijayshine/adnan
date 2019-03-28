@@ -177,8 +177,6 @@ showDatePickerDialog();
 
             protected void onPostExecute(Bitmap result) {
                 Toast.makeText(getApplicationContext(), "Event Saved!",Toast.LENGTH_SHORT).show();
-                Intent intent = new Intent(getApplicationContext(), FeedActivity.class);
-                startActivity(intent);
                 finish();
             }
         }

@@ -110,6 +110,7 @@ public class FeedActivity extends AppCompatActivity implements View.OnClickListe
             FirebaseAuth.getInstance().signOut();
             Intent intent = new Intent(getApplicationContext(),MainActivity.class);
             startActivity(intent);
+            finish();
 
         } else if (view.getId() == R.id.floatingActionButton) {
             Intent intent = new Intent(getApplicationContext(),NewSocialActivity.class);
